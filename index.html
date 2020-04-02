@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="./vue.min.js"></script>
+    <script src="./app.js" type="module"></script>
+    <title>A Card</title>
+  </head>
+  <body>
+    <div id="app">
+      <transition name="grow">
+        <div class="card" :class="{ 'grow': open }">
+          <label for="level-input" class="card-title">Experience Level</label>
+          <div class="row">
+            <input
+              placeholder="Add Experience Level"
+              class="card-input"
+              id="level-input"
+              type="text"
+            />
+            <span class="card-input-icon"></span>
+
+            <div class="toggle-container">
+              <div class="toggle-bar">
+                <button
+                  class="toggle-button"
+                  id="toggle"
+                  type="checkbox"
+                  :class="{ 'toggle-button-active': allActive }"
+                  @click="toggleAll"
+                ></button>
+              </div>
+              <label class="toggle-label" for="toggle">Select All</label>
+            </div>
+          </div>
+
+          <transition-group class="levels" tag="ul" name="fade">
+            <level
+              v-for="(level, index) in levels"
+              :key="level"
+              :level="level"
+              :checked="allActive"
+              :class="{ 'level-show': index < openAmount}"
+            ></level>
+          </transition-group>
+          <button
+            class="chevron"
+            v-on:click="toggleLevels"
+            :class="{ 'chevron-down': open }"
+          ></button>
+        </div>
+      </transition>
+      <button class="zoom" :class="{ 'zoom-active' : zoomed, }" @click="zoom">
+        zoom
+      </button>
+    </div>
+  </body>
+</html>
